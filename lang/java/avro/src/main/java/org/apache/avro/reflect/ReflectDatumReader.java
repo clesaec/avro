@@ -261,7 +261,7 @@ public class ReflectDatumReader<T> extends SpecificDatumReader<T> {
       if (accessor != null) {
         if (accessor.supportsIO()
             && (!Schema.Type.UNION.equals(field.schema().getType()) || accessor.isCustomEncoded())) {
-          accessor.read(record, in);
+          accessor.read(record, in, field);
           return;
         }
         if (accessor.isStringable()) {

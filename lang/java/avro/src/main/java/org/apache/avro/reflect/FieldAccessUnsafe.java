@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 
 import org.apache.avro.AvroRuntimeException;
+import org.apache.avro.Schema;
 import org.apache.avro.io.Decoder;
 import org.apache.avro.io.Encoder;
 
@@ -115,7 +116,7 @@ class FieldAccessUnsafe extends FieldAccess {
     }
 
     @Override
-    protected void read(Object object, Decoder in) throws IOException {
+    protected void read(Object object, Decoder in, Schema.Field field) throws IOException {
       UNSAFE.putInt(object, offset, in.readInt());
     }
 
@@ -141,7 +142,7 @@ class FieldAccessUnsafe extends FieldAccess {
     }
 
     @Override
-    protected void read(Object object, Decoder in) throws IOException {
+    protected void read(Object object, Decoder in, Schema.Field field) throws IOException {
       UNSAFE.putFloat(object, offset, in.readFloat());
     }
 
@@ -167,7 +168,7 @@ class FieldAccessUnsafe extends FieldAccess {
     }
 
     @Override
-    protected void read(Object object, Decoder in) throws IOException {
+    protected void read(Object object, Decoder in, Schema.Field field) throws IOException {
       UNSAFE.putShort(object, offset, (short) in.readInt());
     }
 
@@ -193,7 +194,7 @@ class FieldAccessUnsafe extends FieldAccess {
     }
 
     @Override
-    protected void read(Object object, Decoder in) throws IOException {
+    protected void read(Object object, Decoder in, Schema.Field field) throws IOException {
       UNSAFE.putByte(object, offset, (byte) in.readInt());
     }
 
@@ -219,7 +220,7 @@ class FieldAccessUnsafe extends FieldAccess {
     }
 
     @Override
-    protected void read(Object object, Decoder in) throws IOException {
+    protected void read(Object object, Decoder in, Schema.Field field) throws IOException {
       UNSAFE.putBoolean(object, offset, in.readBoolean());
     }
 
@@ -245,7 +246,7 @@ class FieldAccessUnsafe extends FieldAccess {
     }
 
     @Override
-    protected void read(Object object, Decoder in) throws IOException {
+    protected void read(Object object, Decoder in, Schema.Field field) throws IOException {
       UNSAFE.putChar(object, offset, (char) in.readInt());
     }
 
@@ -271,7 +272,7 @@ class FieldAccessUnsafe extends FieldAccess {
     }
 
     @Override
-    protected void read(Object object, Decoder in) throws IOException {
+    protected void read(Object object, Decoder in, Schema.Field field) throws IOException {
       UNSAFE.putLong(object, offset, in.readLong());
     }
 
@@ -297,7 +298,7 @@ class FieldAccessUnsafe extends FieldAccess {
     }
 
     @Override
-    protected void read(Object object, Decoder in) throws IOException {
+    protected void read(Object object, Decoder in, Schema.Field field) throws IOException {
       UNSAFE.putDouble(object, offset, in.readDouble());
     }
 
@@ -349,8 +350,8 @@ class FieldAccessUnsafe extends FieldAccess {
     }
 
     @Override
-    protected void read(Object object, Decoder in) throws IOException {
-      UNSAFE.putObject(object, offset, encoding.read(in));
+    protected void read(Object object, Decoder in, Schema.Field field) throws IOException {
+      UNSAFE.putObject(object, offset, encoding.read(in, field));
     }
 
     @Override

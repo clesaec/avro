@@ -38,10 +38,10 @@ public abstract class CustomEncoding<T> {
 
   protected abstract void write(Object datum, Encoder out) throws IOException;
 
-  protected abstract T read(Object reuse, Decoder in) throws IOException;
+  protected abstract T read(Object reuse, Decoder in, Schema.Field field) throws IOException;
 
-  T read(Decoder in) throws IOException {
-    return this.read(null, in);
+  T read(Decoder in, Schema.Field field) throws IOException {
+    return this.read(null, in, field);
   }
 
   protected Schema getSchema() {

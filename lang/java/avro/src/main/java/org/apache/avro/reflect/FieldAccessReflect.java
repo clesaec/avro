@@ -18,6 +18,7 @@
 package org.apache.avro.reflect;
 
 import org.apache.avro.AvroRuntimeException;
+import org.apache.avro.Schema;
 import org.apache.avro.io.Decoder;
 import org.apache.avro.io.Encoder;
 
@@ -91,9 +92,9 @@ class FieldAccessReflect extends FieldAccess {
     }
 
     @Override
-    protected void read(Object object, Decoder in) throws IOException {
+    protected void read(Object object, Decoder in, Schema.Field afield) throws IOException {
       try {
-        field.set(object, encoding.read(in));
+        field.set(object, encoding.read(in, afield));
       } catch (IllegalAccessException e) {
         throw new AvroRuntimeException(e);
       }

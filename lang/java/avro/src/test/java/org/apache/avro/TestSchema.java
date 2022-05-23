@@ -366,4 +366,50 @@ public class TestSchema {
   public void testSchemaFieldWithoutSchema() {
     new Schema.Field("f", null);
   }
+<<<<<<< Updated upstream
+=======
+
+  @Test
+  public void testParseRecordWithNameAsType() {
+    final String schemaString = "{\n  \"type\" : \"record\",\n  \"name\" : \"ns.int\",\n"
+        + "  \"fields\" : [ \n    {\"name\" : \"value\", \"type\" : \"int\"}, \n"
+        + "    {\"name\" : \"next\", \"type\" : [ \"null\", \"ns.int\" ]}\n  ]\n}";
+    final Schema schema = new Schema.Parser().parse(schemaString);
+    String toString = schema.toString(true);
+
+    final Schema schema2 = new Schema.Parser().parse(toString);
+    assertEquals(schema, schema2);
+  }
+
+  @Test
+  public void testQualifiedName() {
+    Arrays.stream(Type.values()).forEach((Type t) -> {
+      final Schema.Name name = new Schema.Name(t.getName(), "space");
+      assertEquals("space." + t.getName(), name.getQualified("space"));
+      assertEquals("space." + t.getName(), name.getQualified("otherdefault"));
+    });
+    final Schema.Name name = new Schema.Name("name", "space");
+    assertEquals("name", name.getQualified("space"));
+    assertEquals("space.name", name.getQualified("otherdefault"));
+
+    final Schema.Name nameInt = new Schema.Name("Int", "space");
+    assertEquals("Int", nameInt.getQualified("space"));
+  }
+
+  @Test
+  public void nextTest() {
+    final String txtSchema = "{\n" + "    \"type\": \"record\",\n" + "    \"name\": \"AccountEvent\",\n"
+        + "    \"fields\": [\n" + "        {\"type\": \n" + "          [\"null\",\n" + "           { " + // \"name\":
+                                                                                                         // \"accountList\",\n"
+                                                                                                         // +
+        // " \"type\": {\n" +
+        "                \"type\": \"array\",\n" + "                \"items\": \"long\"\n" +
+        // " }\n" +
+        "          }\n" + "          ], \n" + "         \"name\":\"NullableLongArray\"\n" + "       }\n" + "    ]\n"
+        + "}\n";
+    final Schema schema = new Schema.Parser().parse(txtSchema);
+    assertNotNull(schema);
+    System.out.println(schema.toString(true));
+  }
+>>>>>>> Stashed changes
 }
