@@ -415,7 +415,8 @@ public class TestReflectLogicalTypes {
     try {
       // only one FieldAccess can be set per JVM
       System.clearProperty("avro.disable.unsafe");
-      Assume.assumeTrue(ReflectionUtil.getFieldAccess() instanceof FieldAccessUnsafe);
+      // Assume.assumeTrue(ReflectionUtil.getFieldAccess() instanceof
+      // FieldAccessUnsafe);
 
       Schema uuidSchema = SchemaBuilder.record(RecordWithUUID.class.getName()).fields().requiredString("uuid")
           .endRecord();

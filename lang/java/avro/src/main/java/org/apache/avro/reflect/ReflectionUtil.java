@@ -57,7 +57,13 @@ public class ReflectionUtil {
     FieldAccess access = null;
     try {
       if (null == System.getProperty("avro.disable.unsafe")) {
-        FieldAccess unsafeAccess = load("org.apache.avro.reflect.FieldAccessUnsafe", FieldAccess.class);
+        final String javaVersion = System.getProperty("java.version");
+        final FieldAccess unsafeAccess;
+        if (javaVersion != null && javaVersion.startsWith("1.8")) {
+          unsafeAccess = load("org.apache.avro.reflect.FieldAccessUnsafe", FieldAccess.class);
+        } else {
+          unsafeAccess = load("org.apache.avro.reflect.FieldAccessHandle", FieldAccess.class);
+        }
         if (validate(unsafeAccess)) {
           access = unsafeAccess;
         }
